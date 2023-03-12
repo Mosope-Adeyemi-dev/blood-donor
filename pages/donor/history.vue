@@ -11,7 +11,7 @@
                     <table>
                         <tr>
                             <th>ID</th>
-                            <th>Donor Name <p></p></th>
+                            <th>Hospital Name <p></p></th>
                             <th>Date</th>
                             <th>Location</th>
                             <th>Status</th>
@@ -53,7 +53,7 @@
     export default {
         setup() {
             definePageMeta({
-                layout: 'dashboard'
+                layout: 'donor'
             })
         },
         data() {
@@ -61,35 +61,35 @@
                 requestHistory: [
                 {
                         id: 345234,
-                        fullname: 'James Dorgin',
+                        fullname: 'James Dorgin Clinic',
                         createdAt: Date.now(),
                         location: "Ajah, Lagos Nigeria",
                         isAccepted: "canceled"
                     },
                     {
                         id: 345234,
-                        fullname: 'James Dorgin',
+                        fullname: 'James Dorgin Clinic',
                         createdAt: Date.now(),
                         location: "Ajah, Lagos Nigeria",
                         isAccepted: 'completed'
                     },
                     {
                         id: 345234,
-                        fullname: 'James Dorgin',
+                        fullname: 'James Dorgin Clinic',
                         createdAt: Date.now(),
                         location: "Ajah, Lagos Nigeria",
                         isAccepted: "completed"
                     },
                     {
                         id: 345234,
-                        fullname: 'James Dorgin',
+                        fullname: 'James Dorgin Clinic',
                         createdAt: Date.now(),
                         location: "Ajah, Lagos Nigeria",
                         isAccepted: "pending"
                     },
                     {
                         id: 345234,
-                        fullname: 'James Dorgin',
+                        fullname: 'James Dorgin Clinic',
                         createdAt: Date.now(),
                         location: "Ajah, Lagos Nigeria",
                         isAccepted: "pending"

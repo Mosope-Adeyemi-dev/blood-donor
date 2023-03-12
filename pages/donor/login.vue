@@ -14,7 +14,7 @@
                     <input type="password" name="password" placeholder="Password (min. 8 characters)" required>
                     <NuxtLink class="forgot-password" to="#">Forgot Password</NuxtLink>
                 </div>
-                <button class="login-blk-btn">
+                <button class="login-blk-btn" @click="$router.push('/donor/requests')">
                     Sign In
                 </button>
             </form>
