@@ -1,6 +1,6 @@
 <template>
     <div class="dashboard">
-        <HospitalSideBar />
+        <AdminSidebar />
         <slot class="nuxt-slot"></slot>
     </div>
 </template>
@@ -18,7 +18,7 @@
         mounted () {
             const token = localStorage.getItem("token")
             if(!token) {
-                this.$router.push('/hospital/login')
+                this.$router.push('/admin')
             }
         }
     }

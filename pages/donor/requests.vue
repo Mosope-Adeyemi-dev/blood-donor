@@ -4,20 +4,20 @@
             <img src="@/assets/icons/close.svg" alt="close btn" class="close" @click="closeDetailsModal()">
         </div>
         <div v-show="requestSent == false" class="modal">
-            <p class="card-title">Donor Request</p>
+            <p class="card-title">Donation Request</p>
             <p class="card-subtext">New request for blood donation. Feel free to accept or decline as you choose.</p>
             <p class="card-text">
-                Hospital Name - <span class="value">{{  spotlightDonor.fullname }}</span>
+                Hospital Name - <span class="value">{{  spotlightDonor.hospital[0].name }}</span>
             </p>
             <p class="card-text">
-                Location - <span class="value">{{  spotlightDonor.location || "Nil" }}</span>
+                Location - <span class="value">{{  spotlightDonor.hospital[0].location || "Nil" }}</span>
             </p>
             <p class="card-text">
                 Date - <span class="value">{{  new Date(spotlightDonor.createdAt).toDateString() || "Nil" }}</span>
             </p>
             <div class="actions-btns">
-                <button class="outline-btn" @click="respondToRequest(false)">Decline</button>
-                <button class="org-btn" @click="respondToRequest(true)">Accept</button>
+                <button class="outline-btn" @click="respondToRequest(spotlightDonor._id, false)">Decline</button>
+                <button class="org-btn" @click="respondToRequest(spotlightDonor._id, true)">Accept</button>
             </div>
         </div>
     </div>
@@ -29,8 +29,8 @@
                 <!-- <input type="Search" placeholder="Search" name="" id=""> -->
             </div>
             <div class="request-sect">
-                <div class="table-sect" v-if="requestHistory.length > 0">
-                    <table>
+                <div class="table-sect">
+                    <table v-if="requestHistory.length > 0">
                         <tr>
                             <th>ID</th>
                             <th>Hospital Name
@@ -40,39 +40,42 @@
                             <th>Location</th>
                             <th>Status</th>
                         </tr>
-                        <tr v-for="request in requestHistory" :key="request.id">
+                        <tr v-for="request in requestHistory" :key="request._id">
                             <td>
-                                <p class="opener" @click="showDetails(request.id)">{{ request.id }}</p>
+                                <p class="opener" @click="showDetails(request._id)">{{ request._id.slice(0, 8) }}</p>
                             </td>
                             <td>
-                                <p class="bold-tb-txt">{{ request.fullname }}</p>
+                                <p class="bold-tb-txt">{{ request.hospital[0].name }}</p>
                             </td>
                             <td>
                                 <p>{{ new Date(request.createdAt).toDateString() }}</p>
                             </td>
                             <td>
-                                <p>{{ request.location }}</p>
+                                <p>{{ request.hospital[0].location }}</p>
+                            </td>
+                            <td>
+                                <p>{{ request.status }}</p>
                             </td>
                             <td class="action-td">
                                 <div class="table-action">
-                                    <img src="@/assets/icons/table-menu.svg" alt="actions" @click="activeMenu = request.id">
+                                    <img src="@/assets/icons/table-menu.svg" alt="actions" @click="activeMenu = request._id">
                                 </div>
-                                <div class="menu" v-show="activeMenu == request.id" @click="activeMenu = ''">
-                                    <!-- <div class="close-sect">
-                                                <img src="@/assets/icons/close.svg" alt="" @click="activeMenu = ''">
-                                            </div> -->
-                                    <p>Report Spam</p>
-                                    <p class="delete">Delete</p>
+                                <div class="menu" v-show="activeMenu == request._id" @click="activeMenu = ''">
+                                    <div class="close-sect">
+                                        <img src="@/assets/icons/close.svg" alt="" @click="activeMenu = ''">
+                                    </div>
+                                    <p class="delete" @click="reportSpam(request._id, request.hospital[0]._id)">Report Spam</p>
                                 </div>
                             </td>
                         </tr>
                     </table>
-                </div>
-                <div class="no-table-data" v-if="requestHistory.length < 1">
-                    <p>No records found</p>
-                    <button class="reload-btn">
-                                Reload
-                            </button>
+                    <div class="no-table-data" v-if="requestHistory.length < 1">
+                        <p v-if="isLoading == false ">No records found</p>
+                        <p v-if="isLoading == true">Loading...</p>
+                        <button v-if="!isLoading" @click="getRequests()" class="reload-btn">
+                                        Reload
+                                    </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -80,6 +83,8 @@
 </template>
 
 <script>
+import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css"
     export default {
         setup() {
             definePageMeta({
@@ -88,70 +93,41 @@
         },
         data() {
             return {
-                requestHistory: [{
-                        id: 3452356654,
-                        fullname: 'James Dorgin Clinic',
-                        createdAt: Date.now(),
-                        location: "Ajah, Lagos Nigeria",
-                        isAccepted: "canceled"
-                    },
-                    {
-                        id: 3453674234,
-                        fullname: 'James Dorgin',
-                        createdAt: Date.now(),
-                        location: "Ajah, Lagos Nigeria",
-                        isAccepted: 'completed'
-                    },
-                    {
-                        id: 3345275634,
-                        fullname: 'James Dorgin',
-                        createdAt: Date.now(),
-                        location: "Ajah, Lagos Nigeria",
-                        isAccepted: "completed"
-                    },
-                    {
-                        id: 3457877234,
-                        fullname: 'James Dorgin',
-                        createdAt: Date.now(),
-                        location: "Ajah, Lagos Nigeria",
-                        isAccepted: "pending"
-                    },
-                    {
-                        id: 3452340998,
-                        fullname: 'James Dorgin',
-                        createdAt: Date.now(),
-                        location: "Ajah, Lagos Nigeria",
-                        isAccepted: "pending"
-                    }
+                requestHistory: [
                 ],
                 activeMenu: '',
                 showDetailModel: false,
                 requestSent: false,
                 requestSuccessful: false,
-                spotlightDonor: undefined
+                spotlightDonor: undefined,
+                isLoading: false,
             }
+        },
+        mounted() {
+            this.getRequests()
         },
         methods: {
             sortAscending() {
-                this.requestHistory.sort((a, b) => a.fullname.localeCompare(b.fullname));
+                this.requestHistory.sort((a, b) => a.name.localeCompare(b.name));
             },
             sortDescending() {
-                this.requestHistory.sort((a, b) => b.fullname.localeCompare(a.fullname));
+                this.requestHistory.sort((a, b) => b.name.localeCompare(a.name));
             },
             showDetails(id) {
                 this.showDetailModel = true
-                this.spotlightDonor = this.requestHistory.filter((obj) => obj.id == id)[0]
+                this.spotlightDonor = this.requestHistory.filter((obj) => obj._id == id)[0]
                 console.log(this.spotlightDonor)
             },
-            respondToRequest(isAccepted) {
-                if (!isAccepted) {
+            respondToRequest(requestId, isAccepted) {
+                if (isAccepted == false) {
                     //decline request
+                    this.updateRequest(requestId, 'rejected')
                     this.showDetailModel = false,
                         this.requestSent = false,
                         this.requestSuccessful = false,
                         this.spotlightDonor = undefined
                 } else {
-                    //accept logic
+                    this.updateRequest(requestId, 'accepted')
                     this.showDetailModel = false,
                         this.requestSent = false,
                         this.requestSuccessful = false,
@@ -163,7 +139,179 @@
                     this.requestSent = false,
                     this.requestSuccessful = false,
                     this.spotlightDonor = undefined
-            }
+            },
+            async getRequests() {
+                this.isLoading = true
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/pending', {
+                        method: 'GET',
+                        headers: {
+                            'content-type': "Application/json"
+                        },
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    })
+                    .then((onfulfilled) => {
+                        this.isLoading = false
+                        console.log(onfulfilled)
+                        this.requestHistory = onfulfilled.data
+                    }).catch((onrejected) => {
+                        console.log(onrejected)
+                        if (typeof onrejected.response._data.error !== 'string') {
+                            for (const x in onrejected.response._data.error) {
+                                Toastify({
+                                    text: onrejected.response._data.error || 'An error occurred, try again.',
+                                    duration: 3000,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "rgba(255, 75, 38, 0.85)",
+                                    },
+                                }).showToast();
+                                // toast.error(onrejected.response._data.error || 'An error occurred, try again.')
+                            }
+                        } else {
+                            Toastify({
+                                text: onrejected.response._data.error || 'An error occurred, try again.',
+                                duration: 3000,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "right", // `left`, `center` or `right`
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                style: {
+                                    background: "rgba(255, 75, 38, 0.85)",
+                                },
+                            }).showToast();
+                        }
+                        this.isLoading = false
+                    })
+            },
+            async reportSpam(requestId, reportedHospital) {
+                this.isLoading = true
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/report', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': "Application/json"
+                        },
+                        body: {
+                            requestId,
+                            reportedHospital
+                        },
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    })
+                    .then((onfulfilled) => {
+                        this.isLoading = false
+                        console.log(onfulfilled)
+                        Toastify({
+                                    text: onfulfilled.data.message || "Spam successfully reported",
+                                    duration: 3000,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "rgba(255, 75, 38, 0.85)",
+                                    },
+                                }).showToast();
+                    }).catch((onrejected) => {
+                        console.log(onrejected)
+                        if (typeof onrejected.response._data.message !== 'string') {
+                            for (const x in onrejected.response._data.message) {
+                                Toastify({
+                                    text: onrejected.response._data.message || 'An error occurred, try again.',
+                                    duration: 3000,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "rgba(255, 75, 38, 0.85)",
+                                    },
+                                }).showToast();
+                                // toast.error(onrejected.response._data.error || 'An error occurred, try again.')
+                            }
+                        } else {
+                            Toastify({
+                                text: onrejected.response._data.message || 'An error occurred, try again.',
+                                duration: 3000,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "right", // `left`, `center` or `right`
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                style: {
+                                    background: "rgba(255, 75, 38, 0.85)",
+                                },
+                            }).showToast();
+                        }
+                        this.isLoading = false
+                    })
+            },
+            async updateRequest(requestId, status) {
+                this.isLoading = true
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/update', {
+                        method: 'PATCH',
+                        headers: {
+                            'content-type': "Application/json"
+                        },
+                        body: {
+                            requestId,
+                            status,
+                        },
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    })
+                    .then((onfulfilled) => {
+                        this.isLoading = false
+                        console.log(onfulfilled)
+                        Toastify({
+                                    text: onfulfilled.data.message || `Request ${status} successfully`,
+                                    duration: 3000,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "rgba(255, 75, 38, 0.85)",
+                                    },
+                                }).showToast();
+                    }).catch((onrejected) => {
+                        console.log(onrejected.response)
+                        if (typeof onrejected.response._data.message !== 'string') {
+                            for (const x in onrejected.response._data.message) {
+                                Toastify({
+                                    text: onrejected.response._data.message || 'An error occurred, try again.',
+                                    duration: 3000,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "rgba(255, 75, 38, 0.85)",
+                                    },
+                                }).showToast();
+                                // toast.error(onrejected.response._data.error || 'An error occurred, try again.')
+                            }
+                        } else {
+                            Toastify({
+                                text: onrejected.response._data.message || 'An error occurred, try again.',
+                                duration: 3000,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "right", // `left`, `center` or `right`
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                style: {
+                                    background: "rgba(255, 75, 38, 0.85)",
+                                },
+                            }).showToast();
+                        }
+                        this.isLoading = false
+                    })
+            },
         }
     }
 </script>
@@ -312,6 +460,7 @@
     }
     .table-sect {
         width: 90%;
+        padding: 20px 0;
         /* background: red; */
         overflow-x: auto;
     }
@@ -361,9 +510,8 @@
         min-width: 180px;
         padding: 10px;
         background: white;
-        z-index: 10;
         top: -10px;
-        left: -20px;
+        left: -100px;
         border-radius: 10px;
         border: 1px solid lightgray;
     }
@@ -386,10 +534,13 @@
         width: 100%;
         display: flex;
         justify-content: flex-end;
+        margin-bottom: 10px;
+        cursor: pointer;
     }
     .close-sect img {
-        background: gray;
-        width: 18px;
+        background: black;
+        width: 20px;
+        padding: 2px;
         border-radius: 18px;
     }
     .bold-tb-txt {

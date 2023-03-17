@@ -1,13 +1,13 @@
 <template>
     <div class="sidebar">
         <div class="nav-items">
-            <NuxtLink to="/admin/users" :class="['nav-item', $route.fullPath.includes('users') ? 'active' : '']">
+            <NuxtLink to="/hospital/request-history" :class="['nav-item', $route.fullPath.includes('request-history') ? 'active' : '']">
                 <img src="@/assets/icons/requests.svg" alt="">
-                <p>Users</p>
+                <p>Request History</p>
             </NuxtLink>
-            <NuxtLink to="/admin/reports" :class="['nav-item', $route.fullPath.includes('reports') ? 'active' : '']">
-                <img src="@/assets/icons/requests.svg" alt="">
-                <p>Spam Reports</p>
+            <NuxtLink to="/hospital/view-donors" :class="['nav-item', $route.fullPath.includes('view-donors') ? 'active' : '']">
+                <img src="@/assets/icons/users.svg" alt="">
+                <p>Donor</p>
             </NuxtLink>
         </div>
     </div>

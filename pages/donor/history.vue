@@ -7,8 +7,8 @@
                 <!-- <input type="Search" placeholder="Search" name="" id=""> -->
             </div>
             <div class="request-sect">
-                <div class="table-sect" v-if="requestHistory.length > 0">
-                    <table>
+                <div class="table-sect" >
+                    <table v-if="requestHistory.length > 0">
                         <tr>
                             <th>ID</th>
                             <th>Hospital Name <p></p></th>
@@ -18,31 +18,32 @@
                         </tr>
                         <tr v-for="request in requestHistory" :key="request.id">
                             <td>
-                                <p>{{ request.id }}</p>
+                                <p>{{ request.hospital[0]._id.slice(0, 8) }}</p>
                             </td>
                             <td>
-                                <p class="bold-tb-txt">{{ request.fullname }}</p>
+                                <p class="bold-tb-txt">{{ request.hospital[0].name  }}</p>
                             </td>
                             <td>
                                 <p>{{ new Date(request.createdAt).toLocaleString()  }}</p>
                             </td>
                             <td>
-                                <p>{{ request.location }}</p>
+                                <p>{{ request.hospital[0].location }}</p>
                             </td>
                             <td>
                                 <div class="flex-tb-cnt">
-                                    <p :class="['status', request.isAccepted == 'completed' ? 'green' : request.isAccepted == 'pending' ? 'yellow' : 'gray']"></p>
-                                    <p class="bold-tb-txt">{{ request.isAccepted }}</p>
+                                    <p :class="['status', request.status == 'completed' ? 'green' : request.status == 'pending' ? 'yellow' : request.status == 'rejected' ? 'red' : request.status == 'accepted' ? 'orange' : 'gray']"></p>
+                                    <p class="bold-tb-txt">{{ request.status }}</p>
                                 </div>
                             </td>
                         </tr>
                     </table>
-                </div>
-                <div class="no-table-data" v-if="requestHistory.length < 1">
-                    <p>No records found</p> 
-                    <button class="reload-btn">
-                        Reload
-                    </button>
+                    <div class="no-table-data" v-if="requestHistory.length < 1">
+                        <p v-if="isLoading == false ">No records found</p>
+                        <p v-if="isLoading == true">Loading...</p>
+                        <button v-if="!isLoading" @click="getRequestsHistory()" class="reload-btn">
+                                        Reload
+                                    </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -50,6 +51,8 @@
 </template>
 
 <script>
+import Toastify from 'toastify-js'
+import "toastify-js/src/toastify.css"
     export default {
         setup() {
             definePageMeta({
@@ -58,44 +61,12 @@
         },
         data() {
             return {
-                requestHistory: [
-                {
-                        id: 345234,
-                        fullname: 'James Dorgin Clinic',
-                        createdAt: Date.now(),
-                        location: "Ajah, Lagos Nigeria",
-                        isAccepted: "canceled"
-                    },
-                    {
-                        id: 345234,
-                        fullname: 'James Dorgin Clinic',
-                        createdAt: Date.now(),
-                        location: "Ajah, Lagos Nigeria",
-                        isAccepted: 'completed'
-                    },
-                    {
-                        id: 345234,
-                        fullname: 'James Dorgin Clinic',
-                        createdAt: Date.now(),
-                        location: "Ajah, Lagos Nigeria",
-                        isAccepted: "completed"
-                    },
-                    {
-                        id: 345234,
-                        fullname: 'James Dorgin Clinic',
-                        createdAt: Date.now(),
-                        location: "Ajah, Lagos Nigeria",
-                        isAccepted: "pending"
-                    },
-                    {
-                        id: 345234,
-                        fullname: 'James Dorgin Clinic',
-                        createdAt: Date.now(),
-                        location: "Ajah, Lagos Nigeria",
-                        isAccepted: "pending"
-                    }
-                ]
+                requestHistory: [],
+                isLoading: false
             }
+        },
+        mounted() {
+            this.getRequestsHistory()
         },
         methods: {
             sortAscending(){
@@ -103,7 +74,55 @@
             },
             sortDescending(){
                 this.requestHistory.sort((a, b) => b.fullname.localeCompare(a.fullname));
-            }
+            },
+            async getRequestsHistory() {
+                this.isLoading = true
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/list', {
+                        method: 'GET',
+                        headers: {
+                            'content-type': "Application/json"
+                        },
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    })
+                    .then((onfulfilled) => {
+                        this.isLoading = false
+                        console.log(onfulfilled)
+                        this.requestHistory = onfulfilled.data
+                    }).catch((onrejected) => {
+                        console.log(onrejected)
+                        if (typeof onrejected.response._data.error !== 'string') {
+                            for (const x in onrejected.response._data.error) {
+                                Toastify({
+                                    text: onrejected.response._data.error || 'An error occurred, try again.',
+                                    duration: 3000,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "rgba(255, 75, 38, 0.85)",
+                                    },
+                                }).showToast();
+                                // toast.error(onrejected.response._data.error || 'An error occurred, try again.')
+                            }
+                        } else {
+                            Toastify({
+                                text: onrejected.response._data.error || 'An error occurred, try again.',
+                                duration: 3000,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "right", // `left`, `center` or `right`
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                style: {
+                                    background: "rgba(255, 75, 38, 0.85)",
+                                },
+                            }).showToast();
+                        }
+                        this.isLoading = false
+                    })
+            },
         }
     }
 </script>
@@ -147,7 +166,7 @@
         width: 15px;
         height: 15px;
         border-radius: 10px;
-        background: red;
+        /* background: red; */
     }
     .status.yellow {
         background: yellow;
@@ -157,6 +176,12 @@
     }
     .status.green {
         background: rgb(2, 226, 2);
+    }
+    .status.orange {
+        background: #9567ff;
+    }
+    .status.red {
+        background: red
     }
     .request-sect {
         margin-top: 50px;
