@@ -47,7 +47,6 @@
                         <label for="password">Confirm Password</label>
                         <input type="password" name="password" v-model="confirmPassword" placeholder="Password (min. 8 characters)" required>
                     </div>
-                    <!-- <input type="checkbox" name="terms" class="terms-aggr">I agree to the Terms & Conditions -->
                     <button v-if="!isLoading" class="btn-org">
                             Continue
                         </button>
@@ -153,7 +152,7 @@
                         },
                     }).showToast();
                 }
-                this.data = await $fetch('https://localhost:8001/api/v1/auth/donor/signup', {
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/auth/donor/signup', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
@@ -212,16 +211,16 @@
                 formData.append('nextOfKinEmail', this.nextOfKin)
                 formData.append('photo', document.getElementById("profilePhoto").files[0])
                 this.isLoading = true
-                this.data = await $fetch('https://localhost:8001/api/v1/donor/profile/setup', {
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/profile/setup', {
                         method: 'PUT',
                         headers: {
-                            'content-type': "multipart/form-data"
+                            'content-type': "multipart/form-data",
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
                         },
                         body: formData,
                     })
                     .then((onfulfilled) => {
                         console.log(onfulfilled)
-                        localStorage.setItem("token", onfulfilled.data.token)
                         this.isLoading = false
                         this.$router.push("/donor/login")
                     }).catch((onrejected) => {

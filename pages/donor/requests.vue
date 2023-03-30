@@ -27,7 +27,6 @@
                 <h2>Donation Requests</h2>
                 <div class="top-flex">
                     <h1>View the all request for blood donations you have received. <br>Help keep our platform safe by reporting spam requests.</h1>
-                    <!-- <input type="Search" placeholder="Search" name="" id=""> -->
                 </div>
                 <div class="request-sect">
                     <div class="table-sect">
@@ -144,7 +143,7 @@ import "toastify-js/src/toastify.css"
             },
             async getRequests() {
                 this.isLoading = true
-                this.data = await $fetch('https://localhost:8001/api/v1/donor/donation/pending', {
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/donation/pending', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -192,7 +191,7 @@ import "toastify-js/src/toastify.css"
             },
             async reportSpam(requestId, reportedHospital) {
                 this.isLoading = true
-                this.data = await $fetch('https://localhost:8001/api/v1/donor/donation/report', {
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/donation/report', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
@@ -254,7 +253,7 @@ import "toastify-js/src/toastify.css"
             },
             async updateRequest(requestId, status) {
                 this.isLoading = true
-                this.data = await $fetch('https://localhost:8001/api/v1/donor/donation/update', {
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/donation/update', {
                         method: 'PATCH',
                         headers: {
                             'content-type': "Application/json"
@@ -296,7 +295,6 @@ import "toastify-js/src/toastify.css"
                                         background: "rgba(255, 75, 38, 0.85)",
                                     },
                                 }).showToast();
-                                // toast.error(onrejected.response._data.error || 'An error occurred, try again.')
                             }
                         } else {
                             Toastify({

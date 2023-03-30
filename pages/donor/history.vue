@@ -70,7 +70,7 @@ import "toastify-js/src/toastify.css"
         methods: {
             async getRequestsHistory() {
                 this.isLoading = true
-                this.data = await $fetch('https://localhost:8001/api/v1/donor/donation/list', {
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/donation/list', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"

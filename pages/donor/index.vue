@@ -46,7 +46,7 @@
         methods: {
             async login() {
                 this.isLoading = true
-                this.data = await $fetch('https://localhost:8001/api/v1/auth/donor/login', {
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/auth/donor/login', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"

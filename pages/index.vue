@@ -5,6 +5,7 @@
             <div class="navigation-buttons">
                 <button @click="$router.push('/donor')">For Donors</button>
                 <button @click="$router.push('/hospital')">For Hospitals</button>
+                <button @click="$router.push('/admin')">For Admin</button>
             </div>
         </div>
     </div>

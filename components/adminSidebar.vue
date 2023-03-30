@@ -10,6 +10,9 @@
                 <p>Spam Reports</p>
             </NuxtLink>
         </div>
+        <div class="nav-item">
+            <button @click="logout()" class="logout-btn">Log Out</button>
+        </div>
     </div>
 </template>
 
@@ -18,11 +21,32 @@
         data () {
             return {
             }
+        },
+        methods: {
+            logout() {
+                localStorage.removeItem("token");
+                localStorage.removeItem("isLoggedIn")
+                localStorage.removeItem("email")
+                localStorage.removeItem("name" || "fullname")
+
+                this.$router.push('/admin')
+            }
         }
     }
 </script>
 
 <style scoped>
+.logout-btn {
+    width: 100%;
+    height: 40px;
+    background: white;
+    color: #FF4B26;
+    border: 0;
+    border-radius: 5px;
+    font-weight: 600;
+    font-size: 16px;
+    cursor: pointer;
+}
 .sidebar {
     width: 250px;
     height: 100vh;

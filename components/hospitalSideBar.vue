@@ -45,7 +45,6 @@
 
 <style scoped>
 .logout-btn {
-    /* margin: 6vh auto 20px; */
     width: 100%;
     height: 40px;
     background: white;

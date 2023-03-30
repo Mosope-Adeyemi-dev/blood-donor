@@ -111,7 +111,7 @@
             },
             async getReports() {
                 this.isLoading = true
-                this.data = await $fetch('https://localhost:8001/api/v1/admin/reports/list', {
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/admin/reports/list', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -159,7 +159,7 @@
             },
             async deactivateHospital(reportId, hospitalId) {
                 this.isLoading = true
-                this.data = await $fetch('https://localhost:8001/api/v1/admin/hospital/deactivate', {
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/admin/hospital/deactivate', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
