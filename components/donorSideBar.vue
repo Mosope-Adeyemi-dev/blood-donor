@@ -2,7 +2,6 @@
     <div class="sidebar">
         <div class="nav-items">
             <div class="nav-item name">
-                <!-- <img src="@/assets/icons/requests.svg" alt=""> -->
                 <p>{{ name.toUpperCase() }}</p>
             </div>
             <NuxtLink to="/donor/requests" :class="['nav-item', $route.fullPath.includes('requests') ? 'active' : '']">
@@ -21,7 +20,7 @@
     export default {
         data () {
             return {
-                // activeTab: ''
+                name: ''
             }
         },
         mounted () {

@@ -24,9 +24,6 @@
                             <td>
                                 <p>{{ report.hospital[0].licenseNumber }}</p>
                             </td>
-                            <!-- <td>
-                                <p>{{ report.status }}</p>
-                            </td> -->
                             <td>
                                 <p>{{ report.hospital[0].location }}</p>
                             </td>
@@ -51,8 +48,8 @@
                         <p v-if="isLoading == false ">No records found</p>
                         <p v-if="isLoading == true">Loading...</p>
                         <button v-if="!isLoading" @click="getReports()" class="reload-btn">
-                                        Reload
-                                    </button>
+                            Reload
+                        </button>
                     </div>
                 </div>
             </div>
@@ -114,7 +111,7 @@
             },
             async getReports() {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/admin/reports/list', {
+                this.data = await $fetch('https://localhost:8001/api/v1/admin/reports/list', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -162,7 +159,7 @@
             },
             async deactivateHospital(reportId, hospitalId) {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/admin/hospital/deactivate', {
+                this.data = await $fetch('https://localhost:8001/api/v1/admin/hospital/deactivate', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"

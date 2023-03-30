@@ -1,8 +1,7 @@
 <template>
     <div class="sidebar">
         <div class="nav-items">
-            <div class="nav-item name">
-                <!-- <img src="@/assets/icons/requests.svg" alt=""> -->
+            <div class="nav-item name">>
                 <p>{{ name.toUpperCase() }}</p>
             </div>
             <NuxtLink to="/hospital/request-history" :class="['nav-item', $route.fullPath.includes('request-history') ? 'active' : '']">
@@ -26,7 +25,6 @@
         data () {
             return {
                 name: ''
-                // activeTab: ''
             }
         },
         mounted () {

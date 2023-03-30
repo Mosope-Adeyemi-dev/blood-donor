@@ -1,16 +1,16 @@
 <template>
     <div class="whole-container">
         <div class="login-section">
-            <h2>Admin Login to Donorly</h2>
-            <h1>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Turpis morbi pulvinar venenatis non.</h1>
+            <h2>Login to Donorly</h2>
+            <h1>Welcome back donor! We are glad to have you back..</h1>
             <form action="" class="form-sect" @submit.prevent="login()">
                 <div class="input-sect">
                     <label for="email">Email</label>
-                    <input type="email" name="email" placeholder="Email address" v-model="email" required>
+                    <input type="email" name="email" v-model="email" placeholder="Email address" required>
                 </div>
                 <div class="input-sect">
                     <label for="password">Password</label>
-                    <input type="password" name="password" placeholder="Password (min. 8 characters)" v-model="password" required>
+                    <input type="password" name="password" v-model="password" placeholder="Password (min. 8 characters)" required>
                     <NuxtLink class="forgot-password" to="#">Forgot Password</NuxtLink>
                 </div>
                 <button v-if="!isLoading" class="login-blk-btn">
@@ -20,6 +20,14 @@
                     Loading...
                 </button>
             </form>
+            <p class="account-prompt">
+                Don't have a account ?
+                <NuxtLink to="/donor/signup">Sign up now</NuxtLink>
+            </p>
+            <p class="account-prompt">
+                Are you a Hospital ?
+                <NuxtLink to="/hospital/signup">Click Here</NuxtLink>
+            </p>
         </div>
     </div>
 </template>
@@ -30,15 +38,15 @@
     export default {
         data() {
             return {
-                email: '',
-                password: '',
-                isLoading: false
+                isLoading: false,
+                email: "",
+                password: ""
             }
         },
         methods: {
             async login() {
                 this.isLoading = true
-                this.data = await $fetch('https://localhost:8001/api/v1/auth/admin/login', {
+                this.data = await $fetch('https://localhost:8001/api/v1/auth/donor/login', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
@@ -57,42 +65,43 @@
                             text: 'Login successful',
                             duration: 3000,
                             close: true,
-                            gravity: "top", // `top` or `bottom`
-                            position: "right", // `left`, `center` or `right`
-                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            gravity: "top",
+                            position: "right",
+                            stopOnFocus: true,
                             style: {
                                 background: "rgba(255, 75, 38, 0.85)",
                             },
                         }).showToast();
                         this.isLoading = false
-                        this.$router.push('/admin/users')
+                        this.$router.push('/donor/requests')
                     }).catch((onrejected) => {
-                        console.log(onrejected)
-                        if (typeof onrejected.response._data.error !== 'string') {
-                            for (const x in onrejected.response._data.error) {
+                        console.log(onrejected.response)
+                        if (typeof onrejected.response._data.message !== 'string') {
+                            for (const x in onrejected.response._data.message) {
                                 Toastify({
-                                    text: onrejected.response._data.error || 'An error occurred, try again.',
+                                    text: onrejected.response._data.message || 'An error occurred, try again.',
                                     duration: 3000,
                                     close: true,
-                                    gravity: "top", // `top` or `bottom`
-                                    position: "left", // `left`, `center` or `right`
-                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    gravity: "top",
+                                    position: "right",
+                                    stopOnFocus: true,
                                     style: {
-                                        background: "rgba(255, 75, 38, 0.85)",
+                                        background: "white",
+                                        color: "red"
                                     },
                                 }).showToast();
-                                // toast.error(onrejected.response._data.error || 'An error occurred, try again.')
                             }
                         } else {
                             Toastify({
-                                text: onrejected.response._data.error || 'An error occurred, try again.',
+                                text: onrejected.response._data.message || 'An error occurred, try again.',
                                 duration: 3000,
                                 close: true,
                                 gravity: "top", // `top` or `bottom`
-                                position: "left", // `left`, `center` or `right`
+                                position: "right", // `left`, `center` or `right`
                                 stopOnFocus: true, // Prevents dismissing of toast on hover
                                 style: {
-                                    background: "rgba(255, 75, 38, 0.85)",
+                                    background: "white",
+                                    color: "red"
                                 },
                             }).showToast();
                         }
