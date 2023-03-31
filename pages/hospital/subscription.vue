@@ -1,48 +1,16 @@
 <template>
     <div class="whole-container">
         <div class="top-sect">
-            <h2>Request History</h2>
+            <h2>Manage Your Subscription</h2>
             <div class="top-flex">
                 <h1>View the all request for blood donations you have made.</h1>
             </div>
             <div class="request-sect">
-                <div class="table-sect" >
-                    <table v-if="requestHistory.length > 0">
-                        <tr>
-                            <th>ID</th>
-                            <th>Hospital Name <p></p></th>
-                            <th>Date</th>
-                            <th>Location</th>
-                            <th>Status</th>
-                        </tr>
-                        <tr v-for="request in requestHistory" :key="request.id">
-                            <td>
-                                <p>{{ request.hospital[0]._id.slice(0, 8) }}</p>
-                            </td>
-                            <td>
-                                <p class="bold-tb-txt">{{ request.hospital[0].name  }}</p>
-                            </td>
-                            <td>
-                                <p>{{ new Date(request.createdAt).toLocaleString()  }}</p>
-                            </td>
-                            <td>
-                                <p>{{ request.hospital[0].location }}</p>
-                            </td>
-                            <td>
-                                <div class="flex-tb-cnt">
-                                    <p :class="['status', request.status == 'completed' ? 'green' : request.status == 'pending' ? 'yellow' : request.status == 'rejected' ? 'red' : request.status == 'accepted' ? 'orange' : 'gray']"></p>
-                                    <p class="bold-tb-txt">{{ request.status }}</p>
-                                </div>
-                            </td>
-                        </tr>
-                    </table>
-                    <div class="no-table-data" v-if="requestHistory.length < 1">
-                        <p v-if="isLoading == false ">No records found</p>
-                        <p v-if="isLoading == true">Loading...</p>
-                        <button v-if="!isLoading" @click="getRequestsHistory()" class="reload-btn">
-                            Reload
-                        </button>
-                    </div>
+                <div class="no-table-data" v-if="requestHistory.length < 1">
+                        <p v-if="isLoading == true">Retrieving Subscription Details</p>
+                        <button v-if="!isLoading" @click="getRequestHistory()" class="reload-btn">
+                        Reload
+                    </button>
                 </div>
             </div>
         </div>
@@ -50,27 +18,25 @@
 </template>
 
 <script>
-import Toastify from 'toastify-js'
-import "toastify-js/src/toastify.css"
     export default {
         setup() {
             definePageMeta({
-                layout: 'donor'
+                layout: 'dashboard'
             })
         },
         data() {
             return {
-                requestHistory: [],
+                subscriptionDetails: {},
                 isLoading: false
             }
         },
-        mounted() {
-            this.getRequestsHistory()
+        mounted () {
+            this.getSubscriptionStatus()
         },
         methods: {
-            async getRequestsHistory() {
+            async getSubscriptionStatus () {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/donation/list', {
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/subscription/month', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -81,19 +47,18 @@ import "toastify-js/src/toastify.css"
                     })
                     .then((onfulfilled) => {
                         this.isLoading = false
-                        console.log(onfulfilled)
-                        this.requestHistory = onfulfilled.data
+                        this.subscriptionDetails = onfulfilled.data
                     }).catch((onrejected) => {
                         console.log(onrejected)
-                        if (typeof onrejected.response._data.error !== 'string') {
-                            for (const x in onrejected.response._data.error) {
+                        if (typeof onrejected.response._data.message !== 'string') {
+                            for (const x in onrejected.response._data.message) {
                                 Toastify({
-                                    text: onrejected.response._data.error || 'An error occurred, try again.',
+                                    text: onrejected.response._data.message || 'An error occurred, try again.',
                                     duration: 3000,
                                     close: true,
-                                    gravity: "top",
-                                    position: "right", 
-                                    stopOnFocus: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
                                     style: {
                                         background: "rgba(255, 75, 38, 0.85)",
                                     },
@@ -101,12 +66,12 @@ import "toastify-js/src/toastify.css"
                             }
                         } else {
                             Toastify({
-                                text: onrejected.response._data.error || 'An error occurred, try again.',
+                                text: onrejected.response._data.message || 'An error occurred, try again.',
                                 duration: 3000,
                                 close: true,
                                 gravity: "top", // `top` or `bottom`
                                 position: "right", // `left`, `center` or `right`
-                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                stopOnFocus: true,
                                 style: {
                                     background: "rgba(255, 75, 38, 0.85)",
                                 },
@@ -122,12 +87,11 @@ import "toastify-js/src/toastify.css"
 <style scoped>
     .whole-container {
         min-height: 100vh;
+        /* background: red; */
         margin-left: 250px;
         padding: 50px;
     }
-    .top-sect {
-
-    }
+    .top-sect {}
     .top-sect h2 {
         font-weight: 600;
         font-size: 32px;
@@ -159,7 +123,7 @@ import "toastify-js/src/toastify.css"
         width: 15px;
         height: 15px;
         border-radius: 10px;
-        /* background: red; */
+        background: red;
     }
     .status.yellow {
         background: yellow;
@@ -178,11 +142,9 @@ import "toastify-js/src/toastify.css"
     }
     .request-sect {
         margin-top: 50px;
-        /* background: rebeccapurple; */
     }
     .table-sect {
         width: 90%;
-        /* background: red; */
         overflow-x: auto;
     }
     .table-sect table {
@@ -191,7 +153,6 @@ import "toastify-js/src/toastify.css"
         text-align: left;
     }
     .table-sect tr {
-        /* border-bottom: 1px solid lightgray; */
         box-shadow: 0px 1px 0px rgba(133, 133, 133, 0.15);
         color: #71717A;
     }

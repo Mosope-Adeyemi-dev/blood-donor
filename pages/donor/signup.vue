@@ -34,7 +34,7 @@
                     <h1>Join Donorly</h1>
                     <h2 v-show="activeSect === 'signup'">We are glad to have you join us. Get started donating for a greater cause!</h2>
                 </div>
-                <form v-show="activeSect === 'signup'" class="signup-sect" @submit.prevent="signup()">
+                <form v-show="activeSect === 'signup'" class="signup-sect" @submit.prevent="signup">
                     <div class="input-sect">
                         <label for="email">Email</label>
                         <input type="email" name="email" v-model="email" placeholder="Email address" required>
@@ -95,10 +95,10 @@
                         <label>Address</label>
                         <input type="text" v-model="address" placeholder="" required>
                     </div>
-                    <div class="input-sect">
+                    <!-- <div class="input-sect">
                         <label>Photo</label>
-                        <input type="file" id="profilePhoto" required>
-                    </div>
+                        <input type="file" id="profilePhoto" name="profilePhoto" required>
+                    </div> -->
                     <button v-if="!isLoading" class="btn-org">
                             Finish
                         </button>
@@ -108,12 +108,12 @@
                 </form>
                 <p class="account-prompt">
                     Already have a account ?
-                    <NuxtLink to="/donor/login">Login now</NuxtLink>
+                    <NuxtLink to="/donor">Login now</NuxtLink>
                 </p>
             </div>
         </div>
         <div class="rhs">
-        </div>.
+        </div>
     </div>
 </template>
 
@@ -133,7 +133,7 @@
                 bloodGroup: '',
                 genotype: '',
                 nextOfKin: '',
-                address: ''
+                address: '',
             }
         },
         methods: {
@@ -151,27 +151,42 @@
                             background: "rgba(255, 75, 38, 0.85)",
                         },
                     }).showToast();
-                }
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/auth/donor/signup', {
-                        method: 'POST',
-                        headers: {
-                            'content-type': "Application/json"
-                        },
-                        body: JSON.stringify({
-                            email: this.email,
-                            password: this.password,
+                    this.isLoading = false
+                } else {
+                    this.data = await $fetch('https://donorly-api.onrender.com/api/v1/auth/donor/signup', {
+                            method: 'POST',
+                            headers: {
+                                'content-type': "Application/json"
+                            },
+                            body: JSON.stringify({
+                                email: this.email,
+                                password: this.password,
+                            })
                         })
-                    })
-                    .then((onfulfilled) => {
-                        console.log(onfulfilled)
-                        localStorage.setItem("isLoggedIn", true)
-                        localStorage.setItem("token", onfulfilled.data.token)
-                        this.isLoading = false
-                        this.activeSect = 'details'
-                    }).catch((onrejected) => {
-                        console.log(onrejected)
-                        if (typeof onrejected.response._data.message !== 'string') {
-                            for (const x in onrejected.response._data.message) {
+                        .then((onfulfilled) => {
+                            console.log(onfulfilled)
+                            localStorage.setItem("isLoggedIn", true)
+                            localStorage.setItem("token", onfulfilled.data.token)
+                            this.isLoading = false
+                            this.activeSect = 'details'
+                        }).catch((onrejected) => {
+                            console.log(onrejected)
+                            if (typeof onrejected.response._data.message !== 'string') {
+                                for (const x in onrejected.response._data.message) {
+                                    Toastify({
+                                        text: onrejected.response._data.message || 'An error occurred, try again.',
+                                        duration: 3000,
+                                        close: true,
+                                        gravity: "top", // `top` or `bottom`
+                                        position: "left", // `left`, `center` or `right`
+                                        stopOnFocus: true, // Prevents dismissing of toast on hover
+                                        style: {
+                                            background: "rgba(255, 75, 38, 0.85)",
+                                        },
+                                    }).showToast();
+                                    // toast.error(onrejected.response._data.error || 'An error occurred, try again.')
+                                }
+                            } else {
                                 Toastify({
                                     text: onrejected.response._data.message || 'An error occurred, try again.',
                                     duration: 3000,
@@ -183,33 +198,12 @@
                                         background: "rgba(255, 75, 38, 0.85)",
                                     },
                                 }).showToast();
-                                // toast.error(onrejected.response._data.error || 'An error occurred, try again.')
                             }
-                        } else {
-                            Toastify({
-                                text: onrejected.response._data.message || 'An error occurred, try again.',
-                                duration: 3000,
-                                close: true,
-                                gravity: "top", // `top` or `bottom`
-                                position: "left", // `left`, `center` or `right`
-                                stopOnFocus: true, // Prevents dismissing of toast on hover
-                                style: {
-                                    background: "rgba(255, 75, 38, 0.85)",
-                                },
-                            }).showToast();
-                        }
-                        this.isLoading = false
-                    })
+                            this.isLoading = false
+                        })
+                }
             },
             async uploadDetails() {
-                const formData = new FormData()
-                formData.append('fullname', this.fullname)
-                formData.append('location', this.address)
-                formData.append('dob', this.dob)
-                formData.append('bloodGroup', this.bloodGroup)
-                formData.append('genotype', this.genotype)
-                formData.append('nextOfKinEmail', this.nextOfKin)
-                formData.append('photo', document.getElementById("profilePhoto").files[0])
                 this.isLoading = true
                 this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/profile/setup', {
                         method: 'PUT',
@@ -217,12 +211,19 @@
                             'content-type': "multipart/form-data",
                             Authorization: `Bearer ${localStorage.getItem("token")}`
                         },
-                        body: formData,
+                        body: {
+                            fullname: this.fullname,
+                            location: this.address,
+                            dob: this.dob,
+                            bloodGroup: this.bloodGroup,
+                            genotype: this.genotype,
+                            nextOfKinEmail: this.nextOfKin,
+                        },
                     })
                     .then((onfulfilled) => {
                         console.log(onfulfilled)
                         this.isLoading = false
-                        this.$router.push("/donor/login")
+                        this.$router.push("/donor")
                     }).catch((onrejected) => {
                         console.log(onrejected)
                         if (typeof onrejected.response._data.message !== 'string') {
@@ -238,16 +239,15 @@
                                         background: "rgba(255, 75, 38, 0.85)",
                                     },
                                 }).showToast();
-                                // toast.error(onrejected.response._data.error || 'An error occurred, try again.')
                             }
                         } else {
                             Toastify({
                                 text: onrejected.response._data.message || 'An error occurred, try again.',
                                 duration: 3000,
                                 close: true,
-                                gravity: "top", // `top` or `bottom`
-                                position: "left", // `left`, `center` or `right`
-                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                gravity: "top", 
+                                position: "left",
+                                stopOnFocus: true,
                                 style: {
                                     background: "rgba(255, 75, 38, 0.85)",
                                 },

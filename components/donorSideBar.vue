@@ -1,8 +1,8 @@
 <template>
     <div class="sidebar">
         <div class="nav-items">
-            <div class="nav-item name">
-                <p>{{ name.toUpperCase() }}</p>
+            <div class="nav-item name active">
+                <p>Hi There, {{ name.toUpperCase().split(" ")[0] }}</p>
             </div>
             <NuxtLink to="/donor/requests" :class="['nav-item', $route.fullPath.includes('requests') ? 'active' : '']">
                 <img src="@/assets/icons/requests.svg" alt="">
@@ -11,6 +11,10 @@
             <NuxtLink to="/donor/history" :class="['nav-item', $route.fullPath.includes('history') ? 'active' : '']">
                 <img src="@/assets/icons/requests.svg" alt="">
                 <p>History</p>
+            </NuxtLink>
+            <NuxtLink to="/donor/leaderboard" :class="['nav-item', $route.fullPath.includes('leaderboard') ? 'active' : '']">
+                <img src="@/assets/icons/requests.svg" alt="">
+                <p>Leader Board</p>
             </NuxtLink>
         </div>
         <div class="nav-item">

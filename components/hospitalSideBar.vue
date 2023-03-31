@@ -12,6 +12,10 @@
                 <img src="@/assets/icons/users.svg" alt="">
                 <p>Donor</p>
             </NuxtLink>
+            <NuxtLink to="/hospital/subscription" :class="['nav-item', $route.fullPath.includes('subscription') ? 'active' : '']">
+                <img src="@/assets/icons/subscription.png" alt="">
+                <p>Subscription</p>
+            </NuxtLink>
         </div>
         <div class="nav-item">
             <button @click="logout()" class="logout-btn">Log Out</button>
@@ -86,6 +90,7 @@
 }
 .nav-item img {
     margin: 0 15px 0 0;
+    width: 30px;
 }
 .nav-item p {
     font-style: normal;

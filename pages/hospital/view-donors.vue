@@ -123,6 +123,7 @@
                         this.isLoading = false
                         console.log(onfulfilled)
                         this.donors = onfulfilled.data
+                        console.log(this.donors)
                     }).catch((onrejected) => {
                         console.log(onrejected)
                         if (typeof onrejected.response._data.message !== 'string') {

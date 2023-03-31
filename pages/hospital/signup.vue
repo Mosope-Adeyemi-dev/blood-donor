@@ -46,7 +46,7 @@
                 </form>
                 <p class="account-prompt">
                     Already have a account ?
-                    <NuxtLink to="/hospital/login">Login now</NuxtLink>
+                    <NuxtLink to="/hospital">Login now</NuxtLink>
                 </p>
             </div>
         </div>
@@ -103,7 +103,7 @@
                                 color: "rgba(255, 75, 38, 0.85)"
                             },
                         }).showToast();
-                        this.$router.push('/hospital/login')
+                        this.$router.push('/hospital')
                         this.isLoading = false
                     }).catch((onrejected) => {
                         console.log(onrejected)

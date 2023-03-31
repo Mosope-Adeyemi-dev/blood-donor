@@ -96,7 +96,7 @@
                                             Deactivate
                                         </button>
                                         
-                                    <button v-if="hospital.isActive == false" class="action-btn activate">
+                                    <button v-if="hospital.isActive == false" class="action-btn activate" @click="activateHospital(hospital._id)">
                                     Activate
                                 </button>
                             </td>
@@ -284,6 +284,66 @@
                                     },
                                 }).showToast();
                                 // toast.error(onrejected.response._data.error || 'An error occurred, try again.')
+                            }
+                        } else {
+                            Toastify({
+                                text: onrejected.response._data.error || 'An error occurred, try again.',
+                                duration: 3000,
+                                close: true,
+                                gravity: "top", // `top` or `bottom`
+                                position: "right", // `left`, `center` or `right`
+                                stopOnFocus: true, // Prevents dismissing of toast on hover
+                                style: {
+                                    background: "rgba(255, 75, 38, 0.85)",
+                                },
+                            }).showToast();
+                        }
+                        this.isLoading = false
+                    })
+            },
+            async activateHospital(hospitalId) {
+                this.isLoading = true
+                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/admin/hospital/reactivate', {
+                        method: 'POST',
+                        headers: {
+                            'content-type': "Application/json"
+                        },
+                        body: {
+                            hospitalId
+                        },
+                        headers: {
+                            Authorization: `Bearer ${localStorage.getItem("token")}`
+                        }
+                    })
+                    .then((onfulfilled) => {
+                        console.log(onfulfilled)
+                        this.isLoading = false
+                        Toastify({
+                            text: onfulfilled.message,
+                            duration: 3000,
+                            close: true,
+                            gravity: "top", // `top` or `bottom`
+                            position: "right", // `left`, `center` or `right`
+                            stopOnFocus: true, // Prevents dismissing of toast on hover
+                            style: {
+                                background: "rgba(255, 75, 38, 0.85)",
+                            },
+                        }).showToast();
+                    }).catch((onrejected) => {
+                        console.log(onrejected)
+                        if (typeof onrejected.response._data.message !== 'string') {
+                            for (const x in onrejected.response._data.error) {
+                                Toastify({
+                                    text: onrejected.response._data.error || 'An error occurred, try again.',
+                                    duration: 3000,
+                                    close: true,
+                                    gravity: "top", // `top` or `bottom`
+                                    position: "right", // `left`, `center` or `right`
+                                    stopOnFocus: true, // Prevents dismissing of toast on hover
+                                    style: {
+                                        background: "rgba(255, 75, 38, 0.85)",
+                                    },
+                                }).showToast();
                             }
                         } else {
                             Toastify({
