@@ -218,9 +218,8 @@
                             bloodGroup: this.bloodGroup,
                             genotype: this.genotype,
                             nextOfKinEmail: this.nextOfKin,
-                        }) {},
-                    })
-                    .then((onfulfilled) => {
+                        })
+                    }).then((onfulfilled) => {
                         console.log(onfulfilled)
                         this.isLoading = false
                         this.$router.push("/donor")
