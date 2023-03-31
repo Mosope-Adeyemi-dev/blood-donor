@@ -4,8 +4,8 @@
             <div class="signup-progress">
                 <div class="progress-item" @click="activeSect = 'signup'">
                     <span :class="['item-num', activeSect === 'signup' ? 'active' : '']">
-                        1
-                                </span>
+                            1
+                                    </span>
                     <p class="item-name">
                         Create
                     </p>
@@ -13,8 +13,8 @@
                 <img src="@/assets/icons/divider.svg" alt="" class="progress-divider">
                 <div class="progress-item" @click="activeSect = 'details'">
                     <span class="item-num" :class="['item-num', activeSect === 'details' ? 'active' : '']">
-                        2
-                    </span>
+                            2
+                        </span>
                     <p class="item-name">
                         Details
                     </p>
@@ -22,8 +22,8 @@
                 <img src="@/assets/icons/divider.svg" alt="" class="progress-divider">
                 <div class="progress-item">
                     <span class="item-num">
-                        3
-                    </span>
+                            3
+                        </span>
                     <p class="item-name">
                         Finish
                     </p>
@@ -48,11 +48,11 @@
                         <input type="password" name="password" v-model="confirmPassword" placeholder="Password (min. 8 characters)" required>
                     </div>
                     <button v-if="!isLoading" class="btn-org">
-                            Continue
-                        </button>
+                                Continue
+                            </button>
                     <button v-if="isLoading" class="btn-org">
-                            Loading...
-                        </button>
+                                Loading...
+                            </button>
                 </form>
                 <form v-show="activeSect === 'details'" @submit.prevent="uploadDetails()" enctype="multipart/form-data" class="details-sect">
                     <div class="input-sect">
@@ -66,26 +66,26 @@
                     <div class="input-sect">
                         <label>Blood Group</label>
                         <select v-model="bloodGroup" required>
-                                <option value="A+">A+</option>
-                                <option value="B+">B+</option>
-                                <option value="AB+">AB+</option>
-                                <option value="O+">O+</option>
-                                <option value="O-">O-</option>
-                                <option value="A-">A-</option>
-                                <option value="B-">B-</option>
-                                <option value="AB-">AB-</option>
-                            </select>
+                                    <option value="A+">A+</option>
+                                    <option value="B+">B+</option>
+                                    <option value="AB+">AB+</option>
+                                    <option value="O+">O+</option>
+                                    <option value="O-">O-</option>
+                                    <option value="A-">A-</option>
+                                    <option value="B-">B-</option>
+                                    <option value="AB-">AB-</option>
+                                </select>
                     </div>
                     <div class="input-sect">
                         <label>Genotype</label>
                         <select v-model="genotype" required>
-                                <option value="AA">AA</option>
-                                <option value="AS">AS</option>
-                                <option value="AC">AC</option>
-                                <option value="SS">SS</option>
-                                <option value="SC">SC</option>
-                                <option value="CC">CC</option>
-                            </select>
+                                    <option value="AA">AA</option>
+                                    <option value="AS">AS</option>
+                                    <option value="AC">AC</option>
+                                    <option value="SS">SS</option>
+                                    <option value="SC">SC</option>
+                                    <option value="CC">CC</option>
+                                </select>
                     </div>
                     <div class="input-sect">
                         <label>Next of Kin</label>
@@ -96,15 +96,15 @@
                         <input type="text" v-model="address" placeholder="" required>
                     </div>
                     <!-- <div class="input-sect">
-                        <label>Photo</label>
-                        <input type="file" id="profilePhoto" name="profilePhoto" required>
-                    </div> -->
+                            <label>Photo</label>
+                            <input type="file" id="profilePhoto" name="profilePhoto" required>
+                        </div> -->
                     <button v-if="!isLoading" class="btn-org">
-                            Finish
-                        </button>
+                                Finish
+                            </button>
                     <button v-if="isLoading" class="btn-org">
-                            Loading...
-                        </button>
+                                Loading...
+                            </button>
                 </form>
                 <p class="account-prompt">
                     Already have a account ?
@@ -211,14 +211,14 @@
                             'content-type': "multipart/form-data",
                             Authorization: `Bearer ${localStorage.getItem("token")}`
                         },
-                        body: {
+                        body: JSON.stringify({
                             fullname: this.fullname,
                             location: this.address,
                             dob: this.dob,
                             bloodGroup: this.bloodGroup,
                             genotype: this.genotype,
                             nextOfKinEmail: this.nextOfKin,
-                        },
+                        }) {},
                     })
                     .then((onfulfilled) => {
                         console.log(onfulfilled)
@@ -245,7 +245,7 @@
                                 text: onrejected.response._data.message || 'An error occurred, try again.',
                                 duration: 3000,
                                 close: true,
-                                gravity: "top", 
+                                gravity: "top",
                                 position: "left",
                                 stopOnFocus: true,
                                 style: {
