@@ -208,7 +208,7 @@
                 this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/profile/setup', {
                         method: 'PUT',
                         headers: {
-                            'content-type': "multipart/form-data",
+                            'content-type': "Application/json",
                             Authorization: `Bearer ${localStorage.getItem("token")}`
                         },
                         body: JSON.stringify({
