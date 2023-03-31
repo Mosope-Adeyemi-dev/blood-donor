@@ -90,7 +90,7 @@ import "toastify-js/src/toastify.css"
         setup() {
             definePageMeta({
                 layout: 'donor'
-            })
+            })``
         },
         data() {
             return {

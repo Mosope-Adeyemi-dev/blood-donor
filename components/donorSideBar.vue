@@ -1,9 +1,6 @@
 <template>
     <div class="sidebar">
         <div class="nav-items">
-            <div class="nav-item name active">
-                <p>Welcome {{ name.toUpperCase().split(" ")[0] }}</p>
-            </div>
             <NuxtLink to="/donor/requests" :class="['nav-item', $route.fullPath.includes('requests') ? 'active' : '']">
                 <img src="@/assets/icons/requests.svg" alt="">
                 <p>Requests</p>
