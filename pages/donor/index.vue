@@ -61,7 +61,7 @@
                         localStorage.setItem("isLoggedIn", true)
                         localStorage.setItem("token", onfulfilled.data.token)
                         localStorage.setItem("email", onfulfilled.data.user.email)
-                        localStorage.setItem("name", onfulfilled.data.user.fullname)
+                        localStorage.setItem("name", onfulfilled.data.user.fullname || '')
                         Toastify({
                             text: 'Login successful',
                             duration: 3000,

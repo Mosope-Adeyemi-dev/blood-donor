@@ -2,7 +2,7 @@
     <div class="sidebar">
         <div class="nav-items">
             <div class="nav-item name active">
-                <p>Hi There, {{ name.toUpperCase().split(" ")[0] }}</p>
+                <p>Welcome {{ name.toUpperCase().split(" ")[0] }}</p>
             </div>
             <NuxtLink to="/donor/requests" :class="['nav-item', $route.fullPath.includes('requests') ? 'active' : '']">
                 <img src="@/assets/icons/requests.svg" alt="">
@@ -31,7 +31,7 @@
             }
         },
         mounted () {
-            this.name = localStorage.getItem('name' || 'fullname')
+            this.name = localStorage.getItem('name' || 'fullname') | ''
         },
         methods: {
             logout() {
