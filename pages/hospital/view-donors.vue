@@ -44,7 +44,7 @@
             </div>
         </div>
         <div class="donor-sect" v-if="donors.length > 0">
-            <div class="donor-card" v-for="donor in donors" :key="donor.key">
+            <div class="donor-card" v-for="donor in donors" :key="donor._id">
                 <img :src="donor.photo" alt="" class="donor-pic">
                 <div class="donor-info">
                     <p class="donor-name">
@@ -56,7 +56,7 @@
                     <p class="donor-detail">
                         Genotype - <span class="value">{{ donor.genotype }}</span>
                     </p>
-                    <button @click="showDetails(donor.id)">View Details</button>
+                    <button @click="showDetails(donor._id)">View Details</button>
                 </div>
             </div>
         </div>
