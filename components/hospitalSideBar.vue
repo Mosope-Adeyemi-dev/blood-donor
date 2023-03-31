@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar">
         <div class="nav-items">
-            <div class="nav-item name">>
+            <div class="nav-item name">
                 <p>{{ name.toUpperCase() }}</p>
             </div>
             <NuxtLink to="/hospital/request-history" :class="['nav-item', $route.fullPath.includes('request-history') ? 'active' : '']">
