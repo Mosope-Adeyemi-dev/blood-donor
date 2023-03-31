@@ -148,7 +148,7 @@
             },
             async verifyPayment () {
                 const reference = localStorage.getItem('subReference')
-                if(reference) {
+                if(reference != null) {
                     this.verifyingPay = true
                 this.data = await $fetch(`https://donorly-api.onrender.com/api/v1/subscription/verify-transaction?reference=${reference}`, {
                         method: 'POST',
