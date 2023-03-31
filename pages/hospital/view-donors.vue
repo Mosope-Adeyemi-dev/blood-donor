@@ -93,13 +93,13 @@
             this.getDonors()
         },
         methods: {
-            // requestDonation() {
-            //     this.requestSent = true
-            //     this.requestSuccessful = true
-            // },
+            requestDonation() {
+                this.requestSent = true
+                this.requestSuccessful = true
+            },
             showDetails(id) {
                 this.showDetailModel = true
-                this.spotlightDonor = this.donors.filter((obj) => obj.id == id)[0]
+                this.spotlightDonor = this.donors.filter((obj) => obj._id == id)[0]
                 console.log(this.spotlightDonor)
             },
             closeDetailsModal() {
