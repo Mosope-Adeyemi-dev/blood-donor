@@ -65,6 +65,7 @@
                                             <img src="@/assets/icons/close.svg" alt="" @click="activeMenu = ''">
                                         </div>
                                         <p class="delete" @click="reportSpam(request._id, request.hospital[0]._id)">Report Spam</p>
+                                        <p class="" @click="showDetails(request._id)">Manage Request</p>
                                     </div>
                                 </td>
                             </tr>
@@ -143,7 +144,7 @@ import "toastify-js/src/toastify.css"
             },
             async getRequests() {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/donation/pending', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/pending', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -191,7 +192,7 @@ import "toastify-js/src/toastify.css"
             },
             async reportSpam(requestId, reportedHospital) {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/donation/report', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/report', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
@@ -253,7 +254,7 @@ import "toastify-js/src/toastify.css"
             },
             async updateRequest(requestId, status) {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/donation/update', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/update', {
                         method: 'PATCH',
                         headers: {
                             'content-type': "Application/json"
@@ -398,7 +399,8 @@ import "toastify-js/src/toastify.css"
     .org-btn {
         width: 200px;
         height: 40px;
-        background: #FF4B26;
+        /* background: #FF4B26; */
+        background: #7C00B7;
         border-radius: 5px;
         border: 0;
         color: white;
@@ -514,6 +516,7 @@ import "toastify-js/src/toastify.css"
         left: -100px;
         border-radius: 10px;
         border: 1px solid lightgray;
+        z-index: 2;
     }
     .menu p {
         font-size: 14px;
@@ -553,9 +556,9 @@ import "toastify-js/src/toastify.css"
         align-items: center;
         justify-content: center;
         font-size: 20px;
-        color: red;
+        color: black;
         font-weight: 500;
-        background: rgba(211, 211, 211, 0.305);
+        /* background: rgba(211, 211, 211, 0.305); */
         height: 300px;
     }
     .reload-btn {
@@ -563,7 +566,8 @@ import "toastify-js/src/toastify.css"
         margin-top: 50px;
         bottom: 10px;
         width: 100%;
-        background: #FF4B26;
+        /* background: #FF4B26; */
+        background: #7C00B7;
         border-radius: 5px;
         width: 142px;
         height: 35px;

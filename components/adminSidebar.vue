@@ -40,7 +40,7 @@
     width: 100%;
     height: 40px;
     background: white;
-    color: #FF4B26;
+    color: black;
     border: 0;
     border-radius: 5px;
     font-weight: 600;
@@ -51,7 +51,7 @@
     width: 250px;
     height: 100vh;
     position: fixed;
-    background: #FF4B26;
+    background: #12B347;
 }
 .nav-items {
     margin-top: 40px;
@@ -78,9 +78,9 @@
     color: #FFFFFF;
 }
 .nav-item:hover {
-    background: #FF8167;
+    background: #51ce7a;
 }
 .nav-item.active {
-    background: #FF8167;
+    background: #51ce7a;
 }
 </style>

@@ -8,7 +8,7 @@
                 </div>
                 <div class="request-sect">
                     <div class="content">
-                        <!-- <h2 class="">Donorly Leaderboard</h2> -->
+                        <!-- <h2 class="">Blood Donation Leaderboard</h2> -->
                         <div class="table-sect">
                         <table v-if="leaderBoard.length > 0">
                             <tr>
@@ -64,7 +64,7 @@
         methods: {
             async getLeaderBoard() {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donors/leaderboard    ', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donors/leaderboard    ', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"

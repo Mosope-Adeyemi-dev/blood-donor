@@ -31,7 +31,7 @@
             </div>
             <div class="form-sect">
                 <div class="heading">
-                    <h1>Join Donorly</h1>
+                    <h1>Join Blood Donation</h1>
                     <h2 v-show="activeSect === 'signup'">We are glad to have you join us. Get started donating for a greater cause!</h2>
                 </div>
                 <form v-show="activeSect === 'signup'" class="signup-sect" @submit.prevent="signup">
@@ -153,7 +153,7 @@
                     }).showToast();
                     this.isLoading = false
                 } else {
-                    this.data = await $fetch('https://donorly-api.onrender.com/api/v1/auth/donor/signup', {
+                    this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/auth/donor/signup', {
                             method: 'POST',
                             headers: {
                                 'content-type': "Application/json"
@@ -205,7 +205,7 @@
             },
             async uploadDetails() {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/profile/setup', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/profile/setup', {
                         method: 'PUT',
                         headers: {
                             'content-type': "Application/json",
@@ -355,7 +355,7 @@
         margin-top: 20px;
     }
     .btn-org {
-        background: #FF4B26;
+        background: #167EE6;
         border-radius: 8px;
         width: 100%;
         height: 55px;

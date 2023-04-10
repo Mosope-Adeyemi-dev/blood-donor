@@ -9,7 +9,7 @@
     </nav> -->
     <div class="whole-container">
         <div class="content">
-            <h1>Welcome to Donorly!<br></h1>
+            <h1>Welcome to Blood Donation!<br></h1>
 
             <div class="navigation-buttons">
                 <button @click="$router.push('/donor')">For Donors</button>
@@ -33,7 +33,7 @@
         methods: {
             async getLeaderBoard() {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1//donors/leaders/dashboard', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1//donors/leaders/dashboard', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"

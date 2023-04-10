@@ -3,7 +3,7 @@
         <div class="lhs">
             <div class="form-sect">
                 <div class="heading">
-                    <h1>Join Donorly 🤝</h1>
+                    <h1>Join Blood Donation 🤝</h1>
                     <h2>Register as a new hospital and start requesting blood donations for patients in need.</h2>
                 </div>
                 <form action="" @submit.prevent="signup()" class="details-sect">
@@ -75,7 +75,7 @@
         methods: {
             async signup() {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/auth/hospital/signup', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/auth/hospital/signup', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
@@ -239,7 +239,7 @@
         margin-top: 20px;
     }
     .btn-org {
-        background: #FF4B26;
+        background: #167EE6;
         border-radius: 8px;
         width: 100%;
         height: 55px;

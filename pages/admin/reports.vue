@@ -111,7 +111,7 @@
             },
             async getReports() {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/admin/reports/list', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/admin/reports/list', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -159,7 +159,7 @@
             },
             async deactivateHospital(reportId, hospitalId) {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/admin/hospital/deactivate', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/admin/hospital/deactivate', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
@@ -352,9 +352,9 @@
         align-items: center;
         justify-content: center;
         font-size: 20px;
-        color: red;
+        color: black;
         font-weight: 500;
-        background: rgba(211, 211, 211, 0.305);
+        /* background: rgba(211, 211, 211, 0.305); */
         height: 300px;
     }
     .reload-btn {
@@ -362,7 +362,7 @@
         margin-top: 50px;
         bottom: 10px;
         width: 100%;
-        background: #FF4B26;
+        background: black;
         border-radius: 5px;
         width: 142px;
         height: 35px;

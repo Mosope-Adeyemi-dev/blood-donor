@@ -12,10 +12,10 @@
                 <img src="@/assets/icons/users.svg" alt="">
                 <p>Donor</p>
             </NuxtLink>
-            <NuxtLink to="/hospital/subscription" :class="['nav-item', $route.fullPath.includes('subscription') ? 'active' : '']">
+            <!-- <NuxtLink to="/hospital/subscription" :class="['nav-item', $route.fullPath.includes('subscription') ? 'active' : '']">
                 <img src="@/assets/icons/subscription.png" alt="">
                 <p>Subscription</p>
-            </NuxtLink>
+            </NuxtLink> -->
         </div>
         <div class="nav-item">
             <button @click="logout()" class="logout-btn">Log Out</button>
@@ -52,7 +52,7 @@
     width: 100%;
     height: 40px;
     background: white;
-    color: #FF4B26;
+    color: black;
     border: 0;
     border-radius: 5px;
     font-weight: 600;
@@ -61,9 +61,9 @@
 }
 .sidebar {
     width: 250px;
-    height: 100vh;
+    height: 100vh;    
     position: fixed;
-    background: #FF4B26;
+    background: #167EE6;
 }
 .nav-items {
     margin-top: 40px;
@@ -86,7 +86,7 @@
     cursor: default;
 }
 .nav-item.name:hover {
-    background: #FF4B26;
+    background: #64abf1;
 }
 .nav-item img {
     margin: 0 15px 0 0;
@@ -100,9 +100,9 @@
     color: #FFFFFF;
 }
 .nav-item:hover {
-    background: #FF8167;
+    background: #64abf1;
 }
 .nav-item.active {
-    background: #FF8167;
+    background: #64abf1;
 }
 </style>

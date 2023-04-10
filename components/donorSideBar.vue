@@ -9,10 +9,10 @@
                 <img src="@/assets/icons/requests.svg" alt="">
                 <p>History</p>
             </NuxtLink>
-            <NuxtLink to="/donor/leaderboard" :class="['nav-item', $route.fullPath.includes('leaderboard') ? 'active' : '']">
+            <!-- <NuxtLink to="/donor/leaderboard" :class="['nav-item', $route.fullPath.includes('leaderboard') ? 'active' : '']">
                 <img src="@/assets/icons/requests.svg" alt="">
                 <p>Leader Board</p>
-            </NuxtLink>
+            </NuxtLink> -->
         </div>
         <div class="nav-item">
             <button @click="logout()" class="logout-btn">Log Out</button>
@@ -48,7 +48,7 @@
     width: 100%;
     height: 40px;
     background: white;
-    color: #FF4B26;
+    color: black;
     border: 0;
     border-radius: 5px;
     font-weight: 600;
@@ -59,7 +59,8 @@
     width: 250px;
     height: 100vh;
     position: fixed;
-    background: #FF4B26;
+    /* background: #FF4B26; */
+    background: #7C00B7;
 }
 .nav-items {
     margin-top: 40px;
@@ -71,7 +72,8 @@
     cursor: default;
 }
 .nav-item.name:hover {
-    background: #FF4B26;
+    /* background: #FF4B26; */
+    background: #d488f780;
 }
 .nav-item {
     width: 90%;
@@ -95,9 +97,11 @@
     color: #FFFFFF;
 }
 .nav-item:hover {
-    background: #FF8167;
+    /* background: #FF8167; */
+    background: #d488f780;
 }
 .nav-item.active {
-    background: #FF8167;
+    /* background: #FF8167; */
+    background: #d488f780;
 }
 </style>

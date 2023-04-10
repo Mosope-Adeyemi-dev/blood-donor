@@ -1,5 +1,5 @@
 {
-  "name": "donorly",
+  "name": "blood-donations",
   "private": true,
   "scripts": {
     "build": "nuxt build",

@@ -1,7 +1,7 @@
 <template>
     <div class="whole-container">
         <div class="login-section">
-            <h2>Admin Login to Donorly</h2>
+            <h2>Admin Login to Blood Donation</h2>
             <h1>Welcome back admin. Glad to have you back!</h1>
             <form action="" class="form-sect" @submit.prevent="login()">
                 <div class="input-sect">
@@ -38,7 +38,7 @@
         methods: {
             async login() {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/auth/admin/login', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/auth/admin/login', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
@@ -109,7 +109,7 @@
         background: url('@/assets/images/login-bg.png');
         background-size: cover;
         background-repeat: no-repeat;
-        box-shadow: inset 0 0 0 2000px rgba(255, 75, 38, 0.85);
+        box-shadow: inset 0 0 0 2000px rgba(22, 126, 230, 0.85);
         display: flex;
         align-items: center;
     }

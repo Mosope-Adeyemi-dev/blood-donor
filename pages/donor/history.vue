@@ -70,7 +70,7 @@ import "toastify-js/src/toastify.css"
         methods: {
             async getRequestsHistory() {
                 this.isLoading = true
-                this.data = await $fetch('https://donorly-api.onrender.com/api/v1/donor/donation/list', {
+                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/list', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -222,9 +222,9 @@ import "toastify-js/src/toastify.css"
         align-items: center;
         justify-content: center;
         font-size: 20px;
-        color: red;
+        color: black;
         font-weight: 500;
-        background: rgba(211, 211, 211, 0.305);
+        /* background: rgba(211, 211, 211, 0.305); */
         height: 300px;
     }
     .reload-btn {
@@ -232,7 +232,8 @@ import "toastify-js/src/toastify.css"
         margin-top: 50px;
         bottom: 10px;
         width: 100%;
-        background: #FF4B26;
+        /* background: #FF4B26;/ */
+        background: #7C00B7;
         border-radius: 5px;
         width: 142px;
         height: 35px;
