@@ -1,3 +1,1 @@
-# JavaScript Developers
 
-### The problem is that Nigeria lacks an efficient blood donor management platform that connects blood donors with hospitals and patients in need of blood transfusions. This results in a shortage of blood supply, delayed medical treatment, and loss of lives. There is a need for a comprehensive blood donor management platform that utilizes technology to streamline the process of blood donation, improve communication between blood banks and hospitals, and increase awareness about the importance of blood donation.
