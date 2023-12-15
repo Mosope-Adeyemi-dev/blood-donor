@@ -146,7 +146,7 @@
             },
             async getDonors() {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/admin/donors/list', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/admin/donors/list', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -194,7 +194,7 @@
             },
             async getHospitals() {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/admin/hospitals/list', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/admin/hospitals/list', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -242,7 +242,7 @@
             },
             async deactivateHospital(hospitalId) {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/admin/hospital/deactivate', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/admin/hospital/deactivate', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
@@ -304,7 +304,7 @@
             },
             async activateHospital(hospitalId) {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/admin/hospital/activate', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/admin/hospital/activate', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"

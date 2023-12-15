@@ -144,7 +144,7 @@ import "toastify-js/src/toastify.css"
             },
             async getRequests() {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/pending', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/donor/donation/pending', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -192,7 +192,7 @@ import "toastify-js/src/toastify.css"
             },
             async reportSpam(requestId, reportedHospital) {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/report', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/donor/donation/report', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
@@ -254,7 +254,7 @@ import "toastify-js/src/toastify.css"
             },
             async updateRequest(requestId, status) {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/update', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/donor/donation/update', {
                         method: 'PATCH',
                         headers: {
                             'content-type': "Application/json"

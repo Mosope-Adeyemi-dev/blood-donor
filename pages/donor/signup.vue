@@ -153,7 +153,7 @@
                     }).showToast();
                     this.isLoading = false
                 } else {
-                    this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/auth/donor/signup', {
+                    this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/auth/donor/signup', {
                             method: 'POST',
                             headers: {
                                 'content-type': "Application/json"
@@ -205,7 +205,7 @@
             },
             async uploadDetails() {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/profile/setup', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/donor/profile/setup', {
                         method: 'PUT',
                         headers: {
                             'content-type': "Application/json",

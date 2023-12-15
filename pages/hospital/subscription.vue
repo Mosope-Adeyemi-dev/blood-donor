@@ -52,7 +52,7 @@
         methods: {
             async getSubscriptionStatus() {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/subscription/month', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/subscription/month', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -100,7 +100,7 @@
             },
             async paySubscription () {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/subscription/create', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/subscription/create', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"
@@ -150,7 +150,7 @@
                 const reference = localStorage.getItem('subReference')
                 if(reference != null) {
                     this.verifyingPay = true
-                this.data = await $fetch(`https://api-blood-donor.onrender.com/api/v1/subscription/verify-transaction?reference=${reference}`, {
+                this.data = await $fetch(`https://donorly-api-tax9.onrender.com/api/v1/subscription/verify-transaction?reference=${reference}`, {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"

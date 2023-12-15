@@ -70,7 +70,7 @@ import "toastify-js/src/toastify.css"
         methods: {
             async getRequestsHistory() {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/donor/donation/list', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/donor/donation/list', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"

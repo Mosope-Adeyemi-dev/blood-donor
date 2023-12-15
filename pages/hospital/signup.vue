@@ -75,7 +75,7 @@
         methods: {
             async signup() {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/auth/hospital/signup', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/auth/hospital/signup', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"

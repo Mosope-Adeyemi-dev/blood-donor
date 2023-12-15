@@ -110,7 +110,7 @@
             },
             async getDonors() {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/hospital/donors/list', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/hospital/donors/list', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
@@ -158,7 +158,7 @@
             },
             async requestDonation() {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/hospital/donation/request', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/hospital/donation/request', {
                         method: 'POST',
                         headers: {
                             'content-type': "Application/json"

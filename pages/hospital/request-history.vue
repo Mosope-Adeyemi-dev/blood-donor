@@ -75,7 +75,7 @@
             },
             async getRequestHistory () {
                 this.isLoading = true
-                this.data = await $fetch('https://api-blood-donor.onrender.com/api/v1/hospital/donation/history', {
+                this.data = await $fetch('https://donorly-api-tax9.onrender.com/api/v1/hospital/donation/history', {
                         method: 'GET',
                         headers: {
                             'content-type': "Application/json"
