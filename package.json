@@ -9,7 +9,7 @@
     "postinstall": "nuxt prepare"
   },
   "devDependencies": {
-    "nuxt": "^3.3.2"
+    "nuxt": "^3.9.3"
   },
   "dependencies": {
     "toastify-js": "^1.12.0"
